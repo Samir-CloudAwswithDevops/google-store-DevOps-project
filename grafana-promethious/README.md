@@ -11,16 +11,21 @@ helm repo add stable https://charts.helm.sh/stable
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 kubectl create namespace prometheus
 helm install stable prometheus-community/kube-prometheus-stack -n prometheus
-kubectl patch svc stable-grafana \
+
+kubectl patch svc stable-kube-prometheus-sta-prometheus \
 -n prometheus \
 -p '{"spec":{"type":"NodePort"}}'
+
 ##################
 kubectl patch svc stable-grafana \
 -n prometheus \
 -p '{"spec":{"type":"NodePort"}}'
 
 ```
-
+```bash
+kubectl get pods -n prometheus
+kubectl get svc -n prometheus
+```
 Notes:
 - Replace the release name `stable` with a more descriptive release name if desired.
 - Editing the services with `kubectl edit svc` lets you change ports, annotations, or type (e.g., to `NodePort`/`LoadBalancer`) as needed.
